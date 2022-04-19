@@ -3,13 +3,14 @@ from disnake import DMChannel
 import asyncpraw
 import disnake
 import scripting as SC
+from main import client_id, client_secret, user_agent, username, password
 
 reddit = asyncpraw.Reddit(
-    client_id="Qc_FzD7Wj5iDJB2XYMluKg",
-    client_secret="-dopAEMTFWGtFImCEgD8_GeGQumAwg",
-    user_agent="joy",
-    username="Emotional_Support_1",
-    password="joybotpass",
+    client_id=client_id,
+    client_secret=client_secret,
+    user_agent=user_agent,
+    username=username,
+    password=password,
 )
 
 ORANGE = 0xFF5733
