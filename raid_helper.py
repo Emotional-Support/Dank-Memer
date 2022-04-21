@@ -3,7 +3,7 @@ from disnake import DMChannel
 import asyncpraw
 import disnake
 import scripting as SC
-from main import client_id, client_secret, user_agent, username, password
+from py_logs import client_id, client_secret, user_agent, username, password
 
 reddit = asyncpraw.Reddit(
     client_id=client_id,
