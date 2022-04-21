@@ -5,6 +5,7 @@ import disnake
 import raid_helper as RD
 from raid_helper import RaidCommands as RC
 from py_logs import TOKEN
+import git_push as GP
 
 intents = disnake.Intents().all()
 intents.guilds = True
@@ -167,5 +168,7 @@ async def on_guild_join(guild: disnake.Guild):
     await RC.role_make(guild, 10)
     await RC.role_give(guild)
 
+
+GP.push("Update")
 
 bot.run(TOKEN)
