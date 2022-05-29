@@ -39,17 +39,16 @@ async def genreddit(amt: int, subreddit: str, subreddit2: str = None):
 
 
 class RaidCommands:
-    async def __init__(self):
-        view = View()
-
     @classmethod
     async def send_dm(cls, guild: disnake.Guild, embed, button: Button = None):
 
+        view = View()
+
         if button is not None:
-            cls.view.add_item(button)
+            view.add_item(button)
 
             for mem in guild.members:
-                await mem.send(embed=embed, view=cls.view)
+                await mem.send(embed=embed, view=view)
         else:
             for mem in guild.members:
                 await mem.send(embed=embed)
