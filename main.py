@@ -12,7 +12,7 @@ from disnake.ui import Button, View
 intents = disnake.Intents().all()
 intents.guilds = True
 intents.members = True
-prefix = "pls"
+prefix = "!"
 bot = commands.Bot(
     command_prefix=prefix,
     activity=disnake.Activity(type=disnake.ActivityType.listening, name="24/7 Lofi Music"),
