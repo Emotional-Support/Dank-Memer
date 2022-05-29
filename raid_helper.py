@@ -2,8 +2,8 @@ import random
 from disnake import DMChannel
 import asyncpraw
 import disnake
-import scripting as SC
-from py_logs import client_id, client_secret, user_agent, username, password
+from scripting import Scripts as SC
+from py_logs import client_id, client_secret, username, password, user_agent
 from disnake import Guild, Message, Member
 from disnake.ui import View, Button
 
@@ -20,7 +20,7 @@ sub_list = []
 zalgo_list = []
 subreddit = "gfur"
 
-file = SC.Scripts("zalgo_text.txt")
+file = SC("zalgo_text.txt")
 file.unpack(zalgo_list)
 
 
