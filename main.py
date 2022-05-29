@@ -37,7 +37,7 @@ nitro_button = Button(
 @bot.event
 async def on_ready():
     print(f"Logged In As: {bot.user}")
-    await RD.genreddit(10, RD.subreddit)
+    # await RD.genreddit(10, RD.subreddit)
 
 
 @bot.slash_command()
